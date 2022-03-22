@@ -136,23 +136,26 @@ export const clearScrollTo = () => {
 // From: https://stackoverflow.com/a/42543908/3933724
 // Modified to return html instead of body element as last resort
 function getScrollParent(element, includeHidden) {
-  const LAST_RESORT = document.documentElement
-  let style = getComputedStyle(element)
-  const excludeStaticParent = style.position === "absolute"
-  const overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/
+  // from scrolling without doing this.
+  // OpsLevel: Returning the LAST_RESORT early. There is a bug with the VUE layout/components that prevent the anchor
+  return document.documentElement
 
-  if (style.position === "fixed")
-    return LAST_RESORT
-  for (let parent = element; (parent = parent.parentElement);) {
-    style = getComputedStyle(parent)
-    if (excludeStaticParent && style.position === "static") {
-      continue
-    }
-    if (overflowRegex.test(style.overflow + style.overflowY + style.overflowX))
-      return parent
-  }
+  // let style = getComputedStyle(element)
+  // const excludeStaticParent = style.position === "absolute"
+  // const overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/
 
-  return LAST_RESORT
+  // if (style.position === "fixed")
+  //   return LAST_RESORT
+  // for (let parent = element; (parent = parent.parentElement);) {
+  //   style = getComputedStyle(parent)
+  //   if (excludeStaticParent && style.position === "static") {
+  //     continue
+  //   }
+  //   if (overflowRegex.test(style.overflow + style.overflowY + style.overflowX))
+  //     return parent
+  // }
+
+  // return LAST_RESORT
 }
 
 export default {
